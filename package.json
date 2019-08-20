@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "push:rjo:dev": "cp -r wp/* \\\\ruatweb001\\c$\\Webs\\sites\\rjofutures-nami\\wp-content\\plugins"
   },
   "repository": {
     "type": "git",

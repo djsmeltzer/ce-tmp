@@ -17,7 +17,8 @@ if (!class_exists('FTE_API')) {
         }
 
         public function emailForm(WP_REST_Request $request) {
-            
+            $params = $request->get_params();
+            return $params;
         }
     }
 }

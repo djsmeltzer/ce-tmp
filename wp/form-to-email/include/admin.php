@@ -4,9 +4,67 @@ if (!class_exists('FTE_Adming')) {
     class FTE_Admin {
 
         function __construct() {
+            add_action('admin_menu', [$this, 'registerSettingsPage']);
+            add_action('admin_init', [$this, 'registerSettings']);
+        }
+
+        function registerSettingsPage() {
+            add_options_page('Form to Email Settings',
+                             'Form to Email',
+                             'manage_options',
+                             'fte_settings_page',
+                             [$this, 'optionsPage']
+            );
+        }
+
+        function registerSettings() {
+            register_setting('fte_settings',
+                             'fte_email_address'
+            );
+            add_settings_section(
+                'fte_settings',
+                'Form to Email Settings',
+                [$this, 'fteSectionInfo'],
+                'fte_settings_page'
+            );
+            add_settings_field(
+                'fte_email_address',
+                'Email Address',
+                [$this, 'fteEmailCallback'],
+                'fte_settings_page',
+                'fte_settings'
+            );
+
+        }
+
+        function fteSectionInfo() {
+            print 'Enter the email address to send form submissions to.';
+            print '<pre>';
+            var_dump($this->options);
+            print '</pre>';
+        }
+
+        function fteEmailCallback() {
+            printf('<input type="text" id="fte_email" name="fte_settings[fte_email_address]" value="%s" />',
+                isset($this->options['fte_email_address']) ? esc_attr($this->options['fte_email_address']) : '');
             
+        }
+
+        function optionsPage() {
+            ?>
+            <div class="wrap">
+            <form method="post" action="options.php">
+            <?php 
+                settings_fields('fte_settings');
+                do_settings_sections('fte_settings_page');
+                submit_button(); ?>
+            </form>
+            </div>
+            <?php
         }
     }
 }
 
-new FTE_Admin();
+if (is_admin()) {
+    new FTE_Admin();
+}
