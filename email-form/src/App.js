@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
-import EmailForm from './EmailForm'
+import Result from './Result'
 
 function App() {
   return (
     <div className="App">
-      <EmailForm></EmailForm>
+      <Result></Result>
     </div>
   );
 }
