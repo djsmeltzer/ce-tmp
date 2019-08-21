@@ -3,6 +3,8 @@
 if (!class_exists('FTE_Adming')) {
     class FTE_Admin {
 
+        private $options;
+
         function __construct() {
             add_action('admin_menu', [$this, 'registerSettingsPage']);
             add_action('admin_init', [$this, 'registerSettings']);
@@ -18,11 +20,11 @@ if (!class_exists('FTE_Adming')) {
         }
 
         function registerSettings() {
-            register_setting('fte_settings',
-                             'fte_email_address'
+            register_setting('fte_settings_group',
+                             'fte_settings'
             );
             add_settings_section(
-                'fte_settings',
+                'fte_settings_section_email',
                 'Form to Email Settings',
                 [$this, 'fteSectionInfo'],
                 'fte_settings_page'
@@ -32,7 +34,7 @@ if (!class_exists('FTE_Adming')) {
                 'Email Address',
                 [$this, 'fteEmailCallback'],
                 'fte_settings_page',
-                'fte_settings'
+                'fte_settings_section_email'
             );
 
         }
@@ -51,11 +53,12 @@ if (!class_exists('FTE_Adming')) {
         }
 
         function optionsPage() {
+            $this->options = get_option('fte_settings')
             ?>
             <div class="wrap">
             <form method="post" action="options.php">
             <?php 
-                settings_fields('fte_settings');
+                settings_fields('fte_settings_group');
                 do_settings_sections('fte_settings_page');
                 submit_button(); ?>
             </form>

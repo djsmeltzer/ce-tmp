@@ -17,8 +17,16 @@ if (!class_exists('FTE_API')) {
         }
 
         public function emailForm(WP_REST_Request $request) {
+            $options = get_option('fte_settings');
+            $to = $options['fte_email_address'];
             $params = $request->get_params();
-            return $params;
+            $message = "A form has been submitted. Here is the data:" . PHP_EOL;
+            foreach ($params as $key => $value) {
+                $message .= "${key}: ${value}" . PHP_EOL;
+            }
+
+            $res = wp_mail($to, 'Test from Wordpress', $message);
+            return [$params,$options,$to,$res];
         }
     }
 }

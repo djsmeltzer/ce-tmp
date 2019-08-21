@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "push:rjo:dev": "cp -r wp/* \\\\ruatweb001\\c$\\Webs\\sites\\rjofutures-nami\\wp-content\\plugins"
+    "push:rjo:dev": "cp -r wp/* \\\\ruatweb001\\c$\\Webs\\sites\\rjofutures-nami\\wp-content\\plugins",
+    "push:ce:dev": "rsync -av --chmod=D755,F644 wp/* cared@cared:wordpress/wp-content/plugins",
+    "push:ce:prod": "rsync -av --chmod=D755,F644 wp/* wc-car-ed@caredwp:public/wp-content/plugins"
+
   },
   "repository": {
     "type": "git",
